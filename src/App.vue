@@ -19,8 +19,8 @@ body { margin: 0; overflow: hidden; background-color: #ffffff; display: flex; ju
 canvas { display: block; }
 .panel-container {
   position: relative;
-  width: 90%; /* 调整容器宽度 */
-  height: 90%; /* 调整容器高度 */
+  width: 70%; /* 调整容器宽度 */
+  height: 100%; /* 调整容器高度 */
 }
 .panel {
   position: absolute;

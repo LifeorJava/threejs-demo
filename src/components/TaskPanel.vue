@@ -1,14 +1,24 @@
 <template>
-  <div style="width: 100%; height: 100%;">
-    <div ref="container" class="panel-container"><canvas ref="canvas"></canvas></div>
+  <div style="width: 100%; height: 100%;display: flex;">
+    <ThreeDCylinderChart  style="width: 30%;" />
+
+    <div ref="container" class="panel-container" >
+      <canvas ref="canvas" style="width: 100%; height: 100%;" >
+      </canvas>
+    </div>
+   
   </div>
 
 </template>
 
 <script>
 import * as THREE from 'three';
+import ThreeDCylinderChart from './ThreeDCylinderChart.vue'
 
 export default {
+  components: {
+    ThreeDCylinderChart
+  },
   data() {
     return {
       scene: null,
@@ -19,7 +29,7 @@ export default {
       rotationSpeed: 0.0009, //轮播速度
       isRotating: true,
       numPanels: 20,// 面板数量
-      radius: 12, // 圆的半径
+      radius: 5, // 圆的半径
       selectedPanelIndex: null
     };
   },
@@ -54,12 +64,13 @@ export default {
 
       // 设置相机
       this.camera = new THREE.PerspectiveCamera(
-        75, // 视野角度
+        40, // 视野角度
+        // 1.5/1,
         this.$refs.container.clientWidth / this.$refs.container.clientHeight, // 长宽比
-        1, // 近裁剪平面
-        50 // 远裁剪平面
+        3, // 近裁剪平面
+        28 // 远裁剪平面
       );
-      this.camera.position.z = 35; // 将相机向后移动
+      this.camera.position.z = 10; // 将相机向后移动
 
       // 设置 WebGL 渲染器
       this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -71,7 +82,7 @@ export default {
       this.scene.add(ambientLight);
 
       // 添加方向光
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
       directionalLight.position.set(1, 1, 1).normalize();
       this.scene.add(directionalLight);
 
@@ -121,7 +132,7 @@ export default {
         const geometry = new THREE.PlaneGeometry(width, height);
         const mesh = new THREE.Mesh(geometry, material);
         mesh.userData.element = element;
-        mesh.position.set(x, 1, y); // 所有卡片都在 Y=1 的平面上
+        mesh.position.set(x, 2, y); // 所有卡片都在 Y=1 的平面上
         this.panels.push(mesh);
         this.scene.add(mesh);
       }
